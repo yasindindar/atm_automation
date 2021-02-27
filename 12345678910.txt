@@ -1,5 +1,5 @@
 password
-Name:Ahmet                   
+Name:Ahmet
 Surname:Erkek                  
 Id number:12345678910             
 Telephone:684844844   
@@ -22,3 +22,7 @@ Email:email@gmail.com
 16000
 15000
 14000
+13000
+12000
+11000
+10000
