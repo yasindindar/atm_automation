@@ -49,4 +49,5 @@ obje=Customer(name="Ahmet",surname="Erkek",id_number="12345678910",account_numbe
 #print(obje.check_balance())
 print(obje.__str__())
 print(obje.new_balance())
+
 #print(obje.add_money())
