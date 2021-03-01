@@ -23,11 +23,12 @@ class Customer():
 
         with  open('users.txt', 'r', encoding='utf8') as file_name:
             koor = re.search(id_number, file_name.read())
-            if type(koor.span()) is tuple:
-                file_name.seek(koor.span()[0] + 1)
-                return file_name.readline()
-            else:
-                return None
+            if koor != None:
+                if type(koor.span()) is tuple:
+                    file_name.seek(koor.span()[0] + 1)
+                    return file_name.readline()
+                else:
+                    return None
 
     def set_customer_information(self, id_number):
         customer_text = self.get_customer_from_txt(id_number)
@@ -168,10 +169,10 @@ print(obje.telephone)
 
 banka_1 = Bank()
 
-# print(banka_1.login_id_password_check('12345699999', "1235"))
+print(banka_1.login_id_password_check('12345699999', "1235"))
 print(banka_1.login_id_password_check('12345699999', "6789"))
-# print(banka_1.is_avaliable('12345699999', 5000))
-# print(banka_1.login_id_password_check('12345699900', "1235"))
-# print(banka_1.login_id_password_check('12345699999', "6789"))
+print(banka_1.is_avaliable('12345699999', 5000))
+print(banka_1.login_id_password_check('12345699900', "1235"))
+print(banka_1.login_id_password_check('12345699999', "6789"))
 
 banka_1.money_transfer("12345699999","12345678910",1000)
