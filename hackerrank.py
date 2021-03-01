@@ -44,11 +44,6 @@ class Customer():
             return True
         return False
 
-    # def customer_info(self):
-    #     with  open('users.txt', 'r', encoding='utf8') as file_name:
-    #         koor = re.search(self.id_number, file_name.read())
-    #         file_name.seek(koor.start())
-    #         return file_name.readline()
 
     def change_info(self):
         user_kies = input('Enter A to change Email of Enter B to change Telephone: ')
@@ -60,6 +55,8 @@ class Customer():
                 patern = r'\w*[@]\w+[.]\D{3}'
                 if type(re.search(patern, new_email).span()) is tuple:
                     file_name.write(f'\t{new_email}{" " * 5}')
+                else:
+                    print("gecerli bir adres giriniz")
             return f'Your info updated'
         elif user_kies == "B":
             info = input('Please enter the previous Telephone number:')
@@ -69,6 +66,8 @@ class Customer():
                 new_telephone = (input(f"Please enter the your new Telephone number: "))
                 if len(info) == 9:
                     file_name.write(f'\t{new_telephone}\t')
+                else:
+                    print("9 haneli telefon giriniz")
             return f'Your info updated'
 
     @property
@@ -105,29 +104,25 @@ class Customer():
             transactions.writelines(customer_transaction_lines_list)
 
 
-            # if type(koor.span()) is tuple:
-            # transactions.seek(koor.span()[0] + 1)
-            # return transactions.readline()
-
-
 class Bank:
     file_name = 0
     def __init__(self):
         pass
 
-    def money_transfer(self,sender_id,receiver_id, amount):
-        sender_customer_1 = Customer()
-        sender_customer_1.set_customer_information(sender_id)
-        receiver_customer_2 = Customer()
-        if receiver_customer_2.set_customer_information(receiver_id) and self.is_avaliable(sender_id, amount):
-            sender_customer_1.withdraw = -amount
-            sender_customer_1.withdraw_money()
-            receiver_customer_2.insert_money = amount
-            receiver_customer_2.add_money()
-
+    def money_transfer(self, sender_id, receiver_id, amount):
+        if self.is_avaliable(sender_id, amount) and self.is_user(receiver_id):
+            sender_customer_1 = Customer()
+            sender_customer_1.set_customer_information(sender_id)
+            receiver_customer_2 = Customer()
+            if receiver_customer_2.set_customer_information(receiver_id) and self.is_avaliable(sender_id, amount):
+                sender_customer_1.withdraw = -amount
+                sender_customer_1.withdraw_money()
+                receiver_customer_2.insert_money = amount
+                receiver_customer_2.add_money()
 
 
     def login_id_password_check(self, id, password):
+        print("kullanıcı adı veya parola hatalı")
         customer_1 = Customer()
         if customer_1.set_customer_information(id) == True:
             if customer_1.password == password:
@@ -137,6 +132,7 @@ class Bank:
 
 
     def is_user(self, id):
+        print("alıcı customer bulunamadı")
         customer_1 = Customer()
         if customer_1.set_customer_information(id) == True:
             return True
@@ -145,6 +141,7 @@ class Bank:
 
 
     def is_avaliable(self,id, amount):
+        print("gönderici bakiyesi yeterli değil")
         customer_1 = Customer()
         if customer_1.set_customer_information(id) == True:
             if int(customer_1.check_balance) >= amount:
@@ -155,17 +152,23 @@ class Bank:
             return False
 
 obje = Customer()
-# print(obje.get_customer_from_txt('12345699999'))
 obje.set_customer_information('12345699999')
+
+obje_1 = Customer()
+obje_1.set_customer_information('12345678910')
+
 print(obje.name)
 print(obje.surname)
 print(obje.password)
 print(obje.id_number)
 print(obje.email)
 print(obje.telephone)
-# obje.insert_money = -1000
-# obje.new_balance()
-# print(obje.check_balance)
+print(obje_1.name)
+print(obje_1.surname)
+print(obje_1.password)
+print(obje_1.id_number)
+print(obje_1.email)
+print(obje_1.telephone)
 
 banka_1 = Bank()
 
