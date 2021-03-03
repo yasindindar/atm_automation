@@ -18,6 +18,8 @@ class Customer():
         self.email = None
         self.telephone = None
         self.password = None
+        self.new_email = None
+        self.new_telephone = None
 
     def get_customer_from_txt(self, id_number):
         print(id_number)
@@ -46,29 +48,24 @@ class Customer():
         return False
 
 
-    def change_info(self):
-        user_kies = input('Enter A to change Email of Enter B to change Telephone: ')
-        if user_kies == "A":
-            info = input('Please enter the previous email:')
-            with  open('users.txt', 'r+', encoding='utf8') as file_name:
-                file_name.seek(re.search(info, file_name.read()).start())
-                new_email = (input(f"Please enter the your new email: "))
+    def change_email(self):
+            with open('users.txt', 'r+', encoding='utf8') as file_name:
+                file_name.seek(re.search(self.email, file_name.read()).start())
                 patern = r'\w*[@]\w+[.]\D{3}'
-                if type(re.search(patern, new_email).span()) is tuple:
-                    file_name.write(f'\t{new_email}{" " * 5}')
+                if type(re.search(patern, self.new_email).span()) is tuple:
+                    file_name.write(f'\t{self.new_email}{" " * 5}')
                 else:
-                    print("gecerli bir adres giriniz")
+                    print("Please enter valid e-mail address")
             return f'Your info updated'
-        elif user_kies == "B":
-            info = input('Please enter the previous Telephone number:')
-            with  open('users.txt', 'r+', encoding='utf-8') as file_name:
-                koor = re.search(info, file_name.read())
+
+    def change_telephone(self):
+            with open('users.txt', 'r+', encoding='utf-8') as file_name:
+                koor = re.search(self.telephone, file_name.read())
                 file_name.seek(koor.start())
-                new_telephone = (input(f"Please enter the your new Telephone number: "))
-                if len(info) == 9:
-                    file_name.write(f'\t{new_telephone}\t')
+                if len(self.telephone) == 9:
+                    file_name.write(f'\t{self.new_telephone}\t')
                 else:
-                    print("9 haneli telefon giriniz")
+                    print("Please enter 9 digit telephone number")
             return f'Your info updated'
 
     @property
@@ -112,7 +109,7 @@ class Bank:
             sender_customer_1.set_customer_information(sender_id)
             receiver_customer_2 = Customer()
             if receiver_customer_2.set_customer_information(receiver_id) and self.is_avaliable(sender_id, amount):
-                sender_customer_1.withdraw = -amount
+                sender_customer_1.withdraw = amount
                 sender_customer_1.withdraw_money()
                 receiver_customer_2.insert_money = amount
                 receiver_customer_2.add_money()
@@ -141,7 +138,7 @@ class Bank:
         print("gönderici bakiyesi yeterli değil")
         customer_1 = Customer()
         if customer_1.set_customer_information(id) == True:
-            if int(customer_1.check_balance) >= amount:
+            if int(customer_1.check_balance) >= int(amount):
                 return True
             else:
                 return False
